@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run",
+            "request": "launch",
+            "type": "node-terminal",
+            "command": "docker compose -f .vscode/docker-compose.yaml up"
+        },
+        {
+            "name": "Install",
+            "request": "launch",
+            "type": "node-terminal",
+            "command": "docker exec congratulations_typescript_container npm install; docker exec congratulations_typescript_container npm install -g firebase-tools;"
+        },
+        {
+            "request": "launch",
+            "name": "Terminal node",
+            "type": "node-terminal",
+            "command": "docker exec -it congratulations_typescript_container bash"
+        },
+        {
+            "request": "launch",
+            "type": "node-terminal",
+            "name": "Terminal python",
+            "command": "docker exec -it congratulations_python_container bash"
+        },
+        {
+            "request": "launch",
+            "type": "node-terminal",
+            "name": "Compile Type Script",
+            "command": "docker exec congratulations_typescript_container npm run build"
+        }
+    ]
+}
