@@ -1,0 +1,27 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.video-container {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.video-container__scroll-content {
+    display: flex;
+    gap: 20px;
+    /* Adjust the gap between videos as needed */
+}
+
+.video-container__scroll-content video {
+    width: 100%;
+    max-width: calc(100% - (4 * 20px));
+    /* Calculate space for 4 videos */
+    object-fit: cover;
+}
