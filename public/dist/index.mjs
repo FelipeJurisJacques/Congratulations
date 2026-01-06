@@ -1,5 +1,4 @@
 class Home {
-    videos = {};
     render() {
         const videos = [
             'ny1.mp4',

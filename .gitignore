@@ -1,6 +1,6 @@
-**.log
-**/python/*.py
+**/venv/**
+/data/**.js
+/data/**.log
+/data/**.txt
+/data/**.json
 **/node_modules/**
-**/package-lock.json
-.bk/**
-.vscodeb/**
