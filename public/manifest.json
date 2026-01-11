@@ -1,0 +1,28 @@
+{
+  "assets": {
+    "application": [
+      "/assets/application/index.mjs",
+      "/assets/application/service-worker.js"
+    ],
+    "images": [
+      "/assets/images/favicon.jpg"
+    ],
+    "stylesheets": [
+      "/assets/stylesheets/home.css",
+      "/assets/stylesheets/main.css",
+      "/assets/stylesheets/video.css"
+    ],
+    "thumbnails": [
+      "/assets/thumbnails/ny1.jpg",
+      "/assets/thumbnails/ny2.jpg",
+      "/assets/thumbnails/ny3.jpg",
+      "/assets/thumbnails/ny4.jpg"
+    ],
+    "videos": [
+      "/assets/videos/ny1.mp4",
+      "/assets/videos/ny2.mp4",
+      "/assets/videos/ny3.mp4",
+      "/assets/videos/ny4.mp4"
+    ]
+  }
+}

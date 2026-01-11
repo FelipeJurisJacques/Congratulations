@@ -1,27 +1,32 @@
-export default class Home {
+import View from '../../../engine/abstracts/view'
+import Manifest from '../../../engine/helpers/manifest'
+
+export default class Home extends View {
+    private content: string = ''
+
     public render(): string {
-        const videos = [
-            'ny1.mp4',
-            'ny2.mp4',
-            'ny3.mp4',
-            'ny4.mp4',
-            'ny5.mp4',
-        ]
-        const images = [
-            'ny1.jpg',
-            'ny2.jpg',
-            'ny3.jpg',
-            'ny4.jpg',
-            'ny5.jpg',
-        ]
-        let html = ''
-        for (let i = 0; i < videos.length; i++) {
-            html += `<video autoplay loop muted poster="./assets/images/${images[i]}">
-                <source src="./assets/videos/${videos[i]}" type="video/mp4">
-            </video>`
-        }
-        return html
+        return this.content
     }
 
-    public handler(): void { }
+    public handler(): void {
+        Manifest.getAssets().then(data => {
+            if (
+                typeof data === 'object'
+                && data.videos
+                && data.thumbnails
+                && Array.isArray(data.videos)
+                && Array.isArray(data.thumbnails)
+            ) {
+                this.content = ''
+                for (let i = 0; i < data.videos.length; i++) {
+                    this.content += `<video autoplay loop muted poster="${data.thumbnails[i]}">
+                            <source src="${data.videos[i]}" type="video/mp4">
+                        </video>`
+                }
+                this.rebuild()
+                console.log(this.content)
+                this.content = ''
+            }
+        })
+    }
 }

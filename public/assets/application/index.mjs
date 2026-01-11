@@ -1,31 +1,67 @@
-class Home {
-    render() {
-        const videos = [
-            'ny1.mp4',
-            'ny2.mp4',
-            'ny3.mp4',
-            'ny4.mp4',
-            'ny5.mp4',
-        ];
-        const images = [
-            'ny1.jpg',
-            'ny2.jpg',
-            'ny3.jpg',
-            'ny4.jpg',
-            'ny5.jpg',
-        ];
-        let html = '';
-        for (let i = 0; i < videos.length; i++) {
-            html += `<video autoplay loop muted poster="./assets/images/${images[i]}">
-                <source src="./assets/videos/${videos[i]}" type="video/mp4">
-            </video>`;
-        }
-        return html;
+class View {
+    _window;
+    _container;
+    constructor(window, container) {
+        this._window = window;
+        this._container = container;
+        this.build();
     }
+    get window() { return this._window; }
     handler() { }
+    render() { return ''; }
+    get stylesheets() { return []; }
+    build() {
+        for (let stylesheet of this.stylesheets) {
+            this.window.document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${stylesheet}" />`);
+        }
+        this._container.innerHTML = this.render();
+        this.handler();
+    }
+    rebuild() { this._container.innerHTML = this.render(); }
 }
 
-class Video {
+class Manifest {
+    static data;
+    static async getAssets() {
+        const data = await this.getData();
+        return data.assets ? data.assets : {};
+    }
+    static async getData() {
+        if (!Manifest.data) {
+            const response = await fetch(`${window.location.origin}/manifest.json`);
+            Manifest.data = await response.json();
+        }
+        return Manifest.data;
+    }
+}
+
+class Home extends View {
+    content = '';
+    render() {
+        return this.content;
+    }
+    handler() {
+        Manifest.getAssets().then(data => {
+            if (typeof data === 'object'
+                && data.videos
+                && data.thumbnails
+                && Array.isArray(data.videos)
+                && Array.isArray(data.thumbnails)) {
+                this.content = '';
+                for (let i = 0; i < data.videos.length; i++) {
+                    this.content += `<video autoplay loop muted poster="${data.thumbnails[i]}">
+                            <source src="${data.videos[i]}" type="video/mp4">
+                        </video>`;
+                }
+                this.rebuild();
+                console.log(this.content);
+                this.content = '';
+            }
+        });
+    }
+}
+
+class Video extends View {
     file = null;
     video = null;
     render() {
@@ -81,12 +117,8 @@ class Video {
 
 const parameters = new URLSearchParams(window.location.search);
 if (parameters.get('v')) {
-    const view = new Video();
-    window.document.body.insertAdjacentHTML('beforeend', view.render());
-    view.handler();
+    new Video(window, window.document.body);
 }
 else {
-    const view = new Home();
-    window.document.body.insertAdjacentHTML('beforeend', view.render());
-    view.handler();
+    new Home(window, window.document.body);
 }

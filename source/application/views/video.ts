@@ -1,4 +1,6 @@
-export default class Video {
+import View from '../../../engine/abstracts/view'
+
+export default class Video extends View {
     private file: null | string = null
     private video: null | string = null
 
